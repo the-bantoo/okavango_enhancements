@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include okavango_enhancements *.css
+recursive-include okavango_enhancements *.csv
+recursive-include okavango_enhancements *.html
+recursive-include okavango_enhancements *.ico
+recursive-include okavango_enhancements *.js
+recursive-include okavango_enhancements *.json
+recursive-include okavango_enhancements *.md
+recursive-include okavango_enhancements *.png
+recursive-include okavango_enhancements *.py
+recursive-include okavango_enhancements *.svg
+recursive-include okavango_enhancements *.txt
+recursive-exclude okavango_enhancements *.pyc
