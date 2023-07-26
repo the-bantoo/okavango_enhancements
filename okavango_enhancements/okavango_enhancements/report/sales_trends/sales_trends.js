@@ -11,6 +11,7 @@ frappe.query_reports["Sales Trends"] = {
 			"fieldname":"period",
 			"label": __("Period"),
 			"fieldtype": "Select",
+			"hidden": 1,
 			"options": [
 				{ "value": "Monthly", "label": __("Monthly") },
 				{ "value": "Quarterly", "label": __("Quarterly") },
@@ -20,9 +21,26 @@ frappe.query_reports["Sales Trends"] = {
 			"default": "Monthly"
 		},
 		{
+			"fieldname":"from_date",
+			"label": __("From Date"),
+			"fieldtype": "Date",
+			"width": "80",
+			"reqd": 1,
+			"default": frappe.datetime.add_months(frappe.datetime.get_today(), -1),
+		},
+		{
+			"fieldname":"to_date",
+			"label": __("To Date"),
+			"fieldtype": "Date",
+			"width": "80",
+			"reqd": 1,
+			"default": frappe.datetime.get_today(),
+		},
+		{
 			"fieldname":"based_on",
 			"label": __("Based On"),
 			"fieldtype": "Select",
+			"hidden": 1,
 			"options": [
 				{ "value": "Item", "label": __("Item") },
 				{ "value": "Item Group", "label": __("Item Group") },
@@ -31,6 +49,7 @@ frappe.query_reports["Sales Trends"] = {
 				{ "value": "Territory", "label": __("Territory") }
 			],
 			"default": "Item",
+			"hidden": 0,
 			"dashboard_config": {
 				"read_only": 1,
 			}
@@ -39,6 +58,7 @@ frappe.query_reports["Sales Trends"] = {
 			"fieldname":"fiscal_year",
 			"label": __("Fiscal Year"),
 			"fieldtype": "Link",
+			"hidden": 1,
 			"options":'Fiscal Year',
 			"default": frappe.sys_defaults.fiscal_year
 		},
@@ -52,6 +72,7 @@ frappe.query_reports["Sales Trends"] = {
 		{
 			"fieldname":"unbundle_items",
 			"label": __("Unbundle Items"),
+			"hidden": 1,
 			"fieldtype": "Check"
 		}
 	]
