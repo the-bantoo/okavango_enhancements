@@ -4,6 +4,8 @@
 import frappe
 from frappe import _
 from erpnext.controllers.trends import *
+import pprint
+pp = pprint.PrettyPrinter(indent=4)
 
 
 def execute(filters=None):
@@ -11,59 +13,144 @@ def execute(filters=None):
         filters = {}
     data = []
     columns = get_columns(filters, "Sales Invoice")
-    data = get_sql_data(filters)
-    #data = get_data_with_bundle_breakdown(filters, conditions)
     
-    
+    basis = filters.get("based_on")
+
+    if basis != "Item":
+        data = get_sql_data(filters, basis)
+    else:
+        data = get_item_data(filters)
 
     return columns, data
 
+def get_list_dict_by_key(data_list, key, value):
+    for row in data_list:
+        if row.get(key) == value:
+            return row
+    return False
 
+def pprint(args):
+    return
+    pp.pprint(args)
 
-def get_sql_data(filters):
+"""
+add delivery_note check
+add force bundle breakdown
+
+"""
+def get_item_data(filters):
+    data = []
+    
+    invoices = frappe.get_all("Sales Invoice", 
+		fields = [ 'posting_date', 'name', 'grand_total'],
+    	order_by='posting_date asc',
+        limit=0,
+		filters = [
+			[	
+				'docstatus', '=', 1
+			],
+			[
+				'posting_date', 'between', [ filters.get("from_date"), filters.get("to_date")]
+			]
+		]
+	)
+    
+    for invoice in invoices:
+        """
+        print("")
+        print("INVOICE")
+        print("")
+
+        print(invoice)
+        
+        print("")
+        print(items)
+        print("")
+        print(p_items)
+        print("")"""
+        
+        items = []
+        p_items = []
+
+        items = frappe.get_all("Sales Invoice Item", 
+            fields = [ 'qty', 'amount', 'item_code'],
+            order_by='item_code asc',
+            filters = [
+                [	
+                    'parent', '=', invoice.name
+                ]
+            ]
+        )
+
+        p_items = frappe.get_all("Packed Item", 
+            fields = [ 'parent_item', 'item_code', 'qty' ],
+            order_by='item_code asc',
+            filters = [
+                [	
+                    'parent', '=', invoice.name
+                ]
+            ]
+        )
+
+        for item in items:
+            packed_item = get_list_dict_by_key(p_items, 'parent_item', item.item_code)
+            
+            if packed_item:
+                
+                # check if item exists in data and add item to data 
+                # or append a new item to data
+                existing_item = get_list_dict_by_key(data, 'item_code', packed_item['item_code'])
+                
+                if existing_item:
+                    # Update existing item in data
+                    existing_item['qty'] += packed_item['qty']
+                    existing_item['amount'] += item.amount
+                    print("incremented 1")
+                else:
+                    # Append a new item to data
+
+                    data.append({
+                        "item_code": packed_item.item_code,
+                        "qty": packed_item.qty,
+                        "amount": item.amount
+                    })
+                    print("append 1: " + packed_item.item_code)
+            else:           
+                pprint(item.item_code)     
+                # check if item exists in data and add item to data 
+                # or append a new item to data
+                existing_item = get_list_dict_by_key(data, 'item_code', item['item_code'])
+                
+                if existing_item:
+                    # Update existing item in data
+                    existing_item['qty'] += item['qty']
+                    existing_item['amount'] += item.amount
+                    print("incremented 2")
+                else:
+                    data.append({
+                        "item_code": item.item_code,
+                        "qty": item.qty,
+                        "amount": item.amount
+                    })
+                    print("append 2: " + item.item_code)
+
+    """
+    print("")
+    pprint("data")
+    print("")
+    pp.pprint(data)
+    """
+
+    return data
+
+def get_sql_data(filters, basis):
     # t2.item_code AS item_code,
     # and t3.item_code = "Second Nicest Strips" or t2.item_code = "Second Nicest Strips"
     # COALESCE(t3.qty, t2.qty) AS qty
-    basis = filters.get("based_on")
+    
     query = ""
-
-    if basis == "Item":
-        query = """ select COALESCE(t3.item_code, t2.item_code) as item, SUM(COALESCE(t3.qty, t2.qty)) AS qty, SUM(t2.amount) as amount, t1.name, t1.grand_total
-
-                    FROM `tabSales Invoice` AS t1
-                    LEFT JOIN `tabSales Invoice Item` AS t2 ON t1.name = t2.parent
-                    LEFT JOIN `tabPacked Item` AS t3 ON t1.name = t3.parent and t3.parent_item = t2.item_code
-
-                    where t1.company = "{0}" 
-                        and t1.docstatus = 1
-                        and t1.posting_date between "{1}" and "{2}"
-                        /* and t2.item_code LIKE "%Nice%" or t3.item_code LIKE "%Nice%" */
-                    
-                    
-                    GROUP BY COALESCE(t3.item_code, t2.item_code)
-                    ORDER BY COALESCE(t3.item_code, t2.item_code) asc
-                    """.format( filters.get("company"), filters.get("from_date"), filters.get("to_date") )
         
-        query = """ select t3.item_code, t2.item_code as item, COALESCE(t3.qty, t2.qty) AS qty, ( t2.amount) as amount, t1.name, t1.grand_total
-
-                    FROM `tabSales Invoice` AS t1
-                    LEFT JOIN `tabSales Invoice Item` AS t2 ON t1.name = t2.parent
-                    LEFT JOIN `tabPacked Item` AS t3 ON t1.name = t3.parent and t3.parent_item = t2.item_code
-
-                    where t1.company = "{0}" 
-                        and t1.docstatus = 1
-                        and t1.posting_date between "{1}" and "{2}"
-                        /* and t2.item_code LIKE "%Nice%" or t3.item_code LIKE "%Nice%" */
-                    
-                    
-                    /*GROUP BY COALESCE(t3.item_code, t2.item_code)
-                    ORDER BY COALESCE(t3.item_code, t2.item_code) asc*/
-                    
-                    order by t1.name
-                    """.format( filters.get("company"), filters.get("from_date"), filters.get("to_date") )
-                
-        
-    elif basis == "Item Group":
+    if basis == "Item Group":
         
         query = """ select t2.item_group AS item_group, SUM(t2.qty) AS qty, SUM(t2.amount) as amount
 
@@ -123,11 +210,9 @@ def get_sql_data(filters):
                     and t1.docstatus = 1
                     and t1.posting_date between "{1}" and "{2}"
                 
-                
                 GROUP BY customer.customer_group
                 ORDER BY customer.customer_group asc
                 """.format( filters.get("company"), filters.get("from_date"), filters.get("to_date") )
-        
         
     elif basis == "Customer":
         query = """ select customer.name AS customer, SUM(t2.amount) as amount
@@ -144,9 +229,6 @@ def get_sql_data(filters):
                 GROUP BY customer.name
                 ORDER BY customer.name asc
                 """.format( filters.get("company"), filters.get("from_date"), filters.get("to_date") )
-
-
-
 
     import pprint
     pp = pprint.PrettyPrinter(indent=4)
@@ -185,7 +267,7 @@ def get_columns(filters, inv):
         main_column = [
             {
                 "label": _("Item"),
-                "fieldname": "item",
+                "fieldname": "item_code",
                 "fieldtype": "Link",
                 "options": "Item",
                 'align': 'left',
@@ -204,7 +286,7 @@ def get_columns(filters, inv):
             },
             {
                 "label": _("Item"),
-                "fieldname": "item",
+                "fieldname": "item_code",
                 "fieldtype": "Link",
                 "options": "Item",
                 'align': 'left',
@@ -233,7 +315,6 @@ def get_columns(filters, inv):
                 "width": 200,
             }
         ]
-        
         
 
     columns = [
@@ -284,6 +365,7 @@ def is_product_bundle(item_name):
     return items"""
 
 def print2(text):
+    
     frappe.errprint(text)
 
 def print(text):

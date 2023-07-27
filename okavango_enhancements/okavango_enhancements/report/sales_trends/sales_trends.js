@@ -43,10 +43,12 @@ frappe.query_reports["Sales Trends"] = {
 			"hidden": 1,
 			"options": [
 				{ "value": "Item", "label": __("Item") },
+				/**
 				{ "value": "Item Group", "label": __("Item Group") },
 				{ "value": "Customer", "label": __("Customer") },
 				{ "value": "Customer Group", "label": __("Customer Group") },
 				{ "value": "Territory", "label": __("Territory") }
+				*/
 			],
 			"default": "Item",
 			"hidden": 0,
