@@ -132,7 +132,7 @@ def get_item_data(filters):
                         "qty": item.qty,
                         "amount": item.amount
                     })
-                    print("append 2: " + item.item_code)
+                    print("append 2: " + str(item.item_code))
 
     """
     print("")
@@ -365,11 +365,11 @@ def is_product_bundle(item_name):
     return items"""
 
 def print2(text):
-    
+    return
     frappe.errprint(text)
 
 def print(text):
-    #return
+    return
     frappe.errprint(text)
 
 def get_data_with_bundle_breakdown(filters, conditions):
