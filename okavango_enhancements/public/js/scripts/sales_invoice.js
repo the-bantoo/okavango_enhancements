@@ -4,12 +4,12 @@
 {% include 'erpnext/selling/sales_common.js' %};
 frappe.provide("erpnext.accounts");
 
+
 erpnext.accounts.SalesInvoiceController = class SalesInvoiceController extends erpnext.selling.SellingController {
 	setup(doc) {
 		this.setup_posting_date_time_check();
 		super.setup(doc);
 	}
-
 	set_batch_number(cdt, cdn) {
 		//return;
 		const doc = frappe.get_doc(cdt, cdn);
@@ -44,7 +44,6 @@ erpnext.accounts.SalesInvoiceController = class SalesInvoiceController extends e
 			}
 		});
 	}
-
 	company() {
 		erpnext.accounts.dimensions.update_dimension(this.frm, this.frm.doctype);
 
@@ -92,7 +91,6 @@ erpnext.accounts.SalesInvoiceController = class SalesInvoiceController extends e
 	refresh(doc, dt, dn) {
 		const me = this;
 		super.refresh();
-		console.log('OVERRIDE!');
 		if(cur_frm.msgbox && cur_frm.msgbox.$wrapper.is(":visible")) {
 			// hide new msgbox
 			cur_frm.msgbox.hide();

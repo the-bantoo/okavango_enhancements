@@ -11,9 +11,6 @@ from frappe.utils import add_days, cint, cstr, flt, formatdate, get_link_to_form
 
 import erpnext
 from erpnext.accounts.deferred_revenue import validate_service_stop_date
-from erpnext.accounts.doctype.accounting_dimension.accounting_dimension import (
-	get_accounting_dimensions,
-)
 from erpnext.accounts.doctype.loyalty_program.loyalty_program import (
 	get_loyalty_program_details_with_points,
 	validate_loyalty_points,
@@ -36,7 +33,7 @@ from erpnext.controllers.accounts_controller import validate_account_head
 from erpnext.controllers.selling_controller import SellingController
 from erpnext.projects.doctype.timesheet.timesheet import get_projectwise_timesheet_data
 from erpnext.setup.doctype.company.company import update_company_current_month_sales
-from okavango_enhancements.app import set_batch_nos
+from erpnext.stock.doctype.batch.batch import set_batch_nos
 from erpnext.stock.doctype.delivery_note.delivery_note import update_billed_amount_based_on_so
 from erpnext.stock.doctype.serial_no.serial_no import (
 	get_delivery_note_serial_no,
@@ -44,6 +41,7 @@ from erpnext.stock.doctype.serial_no.serial_no import (
 	update_serial_nos_after_submit,
 )
 from erpnext.stock.doctype.packed_item.packed_item import *
+from okavango_enhancements.app import set_batch_nos
 
 form_grid_templates = {"items": "templates/form_grid/item_grid.html"}
 
@@ -104,11 +102,13 @@ class CustomSalesInvoice(SellingController):
 		self.validate_debit_to_acc()
 		self.clear_unallocated_advances("Sales Invoice Advance", "advances")
 		self.add_remarks()
+		self.validate_write_off_account()
+		self.validate_account_for_change_amount()
 		self.validate_fixed_asset()
 		self.set_income_account_for_fixed_assets()
 		self.validate_item_cost_centers()
+		self.validate_income_account()
 		self.check_conversion_rate()
-		self.validate_accounts()
 
 		validate_inter_company_party(
 			self.doctype, self.customer, self.company, self.inter_company_invoice_reference
@@ -130,7 +130,8 @@ class CustomSalesInvoice(SellingController):
 		if not self.is_opening:
 			self.is_opening = "No"
 
-		
+		if self._action != "submit" and self.update_stock and not self.is_return:
+			set_batch_nos(self, "warehouse", True)
 
 		if self.redeem_loyalty_points:
 			lp = frappe.get_doc("Loyalty Program", self.loyalty_program)
@@ -145,7 +146,7 @@ class CustomSalesInvoice(SellingController):
 
 		self.set_against_income_account()
 		self.validate_time_sheets_are_submitted()
-		self.validate_multiple_billing("Delivery Note", "dn_detail", "amount")
+		self.validate_multiple_billing("Delivery Note", "dn_detail", "amount", "items")
 		if not self.is_return:
 			self.validate_serial_numbers()
 		else:
@@ -169,18 +170,6 @@ class CustomSalesInvoice(SellingController):
 			validate_loyalty_points(self, self.loyalty_points)
 
 		self.reset_default_field_value("set_warehouse", "items", "warehouse")
-
-		#return
-		#return
-		"""if self._action != "submit" and self.update_stock and not self.is_return:
-			#return
-			set_batch_nos(self, "warehouse", True)"""
-			
-
-	def validate_accounts(self):
-		self.validate_write_off_account()
-		self.validate_account_for_change_amount()
-		self.validate_income_account()
 
 	def validate_fixed_asset(self):
 		for d in self.get("items"):
@@ -243,16 +232,13 @@ class CustomSalesInvoice(SellingController):
 		self.calculate_taxes_and_totals()
 
 	def before_save(self):
-		set_account_for_mode_of_payment(self)		
+		set_account_for_mode_of_payment(self)	
 
 		if self._action != "submit" and self.update_stock and not self.is_return:
 			#return
 			set_batch_nos(self, "warehouse", True)
 			
 		self.update_packing_list()
-
-
-
 
 	def on_submit(self):
 		self.validate_pos_paid_amount()
@@ -389,7 +375,6 @@ class CustomSalesInvoice(SellingController):
 			self.repost_future_sle_and_gle()
 
 		self.db_set("status", "Cancelled")
-		self.db_set("repost_required", 0)
 
 		if (
 			frappe.db.get_single_value("Selling Settings", "sales_update_frequency") == "Each Transaction"
@@ -412,8 +397,6 @@ class CustomSalesInvoice(SellingController):
 			"GL Entry",
 			"Stock Ledger Entry",
 			"Repost Item Valuation",
-			"Repost Payment Ledger",
-			"Repost Payment Ledger Items",
 			"Payment Ledger Entry",
 		)
 
@@ -537,92 +520,6 @@ class CustomSalesInvoice(SellingController):
 
 	def on_update(self):
 		self.set_paid_amount()
-
-	def on_update_after_submit(self):
-		if hasattr(self, "repost_required"):
-			needs_repost = 0
-
-			# Check if any field affecting accounting entry is altered
-			doc_before_update = self.get_doc_before_save()
-			accounting_dimensions = get_accounting_dimensions() + ["cost_center", "project"]
-
-			# Check if opening entry check updated
-			if doc_before_update.get("is_opening") != self.is_opening:
-				needs_repost = 1
-
-			if not needs_repost:
-				# Parent Level Accounts excluding party account
-				for field in (
-					"additional_discount_account",
-					"cash_bank_account",
-					"account_for_change_amount",
-					"write_off_account",
-					"loyalty_redemption_account",
-					"unrealized_profit_loss_account",
-				):
-					if doc_before_update.get(field) != self.get(field):
-						needs_repost = 1
-						break
-
-				# Check for parent accounting dimensions
-				for dimension in accounting_dimensions:
-					if doc_before_update.get(dimension) != self.get(dimension):
-						needs_repost = 1
-						break
-
-				# Check for child tables
-				if self.check_if_child_table_updated(
-					"items",
-					doc_before_update,
-					("income_account", "expense_account", "discount_account"),
-					accounting_dimensions,
-				):
-					needs_repost = 1
-
-				if self.check_if_child_table_updated(
-					"taxes", doc_before_update, ("account_head",), accounting_dimensions
-				):
-					needs_repost = 1
-
-			self.validate_accounts()
-
-			# validate if deferred revenue is enabled for any item
-			# Don't allow to update the invoice if deferred revenue is enabled
-			for item in self.get("items"):
-				if item.enable_deferred_revenue:
-					frappe.throw(
-						_(
-							"Deferred Revenue is enabled for item {0}. You cannot update the invoice after submission."
-						).format(item.item_code)
-					)
-
-			self.db_set("repost_required", needs_repost)
-
-	def check_if_child_table_updated(
-		self, child_table, doc_before_update, fields_to_check, accounting_dimensions
-	):
-		# Check if any field affecting accounting entry is altered
-		for index, item in enumerate(self.get(child_table)):
-			for field in fields_to_check:
-				if doc_before_update.get(child_table)[index].get(field) != item.get(field):
-					return True
-
-			for dimension in accounting_dimensions:
-				if doc_before_update.get(child_table)[index].get(dimension) != item.get(dimension):
-					return True
-
-		return False
-
-	@frappe.whitelist()
-	def repost_accounting_entries(self):
-		if self.repost_required:
-			self.docstatus = 2
-			self.make_gl_entries_on_cancel()
-			self.docstatus = 1
-			self.make_gl_entries()
-			self.db_set("repost_required", 0)
-		else:
-			frappe.throw(_("No updates pending for reposting"))
 
 	def set_paid_amount(self):
 		paid_amount = 0.0
@@ -941,14 +838,11 @@ class CustomSalesInvoice(SellingController):
 			d.projected_qty = bin and flt(bin[0]["projected_qty"]) or 0
 
 	def update_packing_list(self):
-		#return
-		#return
-		
 		if cint(self.update_stock) == 1:
 			self.make_or_update_packing_list()
 		else:
 			self.set("packed_items", [])
-	
+			
 	def make_or_update_packing_list(self):
 		"Make/Update packing list for Product Bundle Item."
 		
@@ -1203,16 +1097,10 @@ class CustomSalesInvoice(SellingController):
 
 	def check_prev_docstatus(self):
 		for d in self.get("items"):
-			if (
-				d.sales_order
-				and frappe.db.get_value("Sales Order", d.sales_order, "docstatus", cache=True) != 1
-			):
+			if d.sales_order and frappe.db.get_value("Sales Order", d.sales_order, "docstatus") != 1:
 				frappe.throw(_("Sales Order {0} is not submitted").format(d.sales_order))
 
-			if (
-				d.delivery_note
-				and frappe.db.get_value("Delivery Note", d.delivery_note, "docstatus", cache=True) != 1
-			):
+			if d.delivery_note and frappe.db.get_value("Delivery Note", d.delivery_note, "docstatus") != 1:
 				throw(_("Delivery Note {0} is not submitted").format(d.delivery_note))
 
 	def make_gl_entries(self, gl_entries=None, from_repost=False):
@@ -1376,12 +1264,7 @@ class CustomSalesInvoice(SellingController):
 
 					if self.is_return:
 						fixed_asset_gl_entries = get_gl_entries_on_asset_regain(
-							asset,
-							item.base_net_amount,
-							item.finance_book,
-							self.get("doctype"),
-							self.get("name"),
-							self.get("posting_date"),
+							asset, item.base_net_amount, item.finance_book, self.get("doctype"), self.get("name")
 						)
 						asset.db_set("disposal_date", None)
 
@@ -1396,12 +1279,7 @@ class CustomSalesInvoice(SellingController):
 							asset.reload()
 
 						fixed_asset_gl_entries = get_gl_entries_on_asset_disposal(
-							asset,
-							item.base_net_amount,
-							item.finance_book,
-							self.get("doctype"),
-							self.get("name"),
-							self.get("posting_date"),
+							asset, item.base_net_amount, item.finance_book, self.get("doctype"), self.get("name")
 						)
 						asset.db_set("disposal_date", self.posting_date)
 
@@ -1657,7 +1535,7 @@ class CustomSalesInvoice(SellingController):
 			and not self.is_internal_transfer()
 		):
 			round_off_account, round_off_cost_center = get_round_off_account_and_cost_center(
-				self.company, "Sales Invoice", self.name, self.use_company_roundoff_cost_center
+				self.company, "Sales Invoice", self.name
 			)
 
 			gl_entries.append(
@@ -1669,9 +1547,7 @@ class CustomSalesInvoice(SellingController):
 							self.rounding_adjustment, self.precision("rounding_adjustment")
 						),
 						"credit": flt(self.base_rounding_adjustment, self.precision("base_rounding_adjustment")),
-						"cost_center": round_off_cost_center
-						if self.use_company_roundoff_cost_center
-						else (self.cost_center or round_off_cost_center),
+						"cost_center": self.cost_center or round_off_cost_center,
 					},
 					item=self,
 				)

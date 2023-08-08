@@ -244,11 +244,14 @@ def deduct_parent_qtys(doc, item_batch_list, parent_item):
                     print("continue")
                     continue
                 else:
+                    if batch.batch_qty <= 0:
+                        del item_batch_list[batch_idx]
+
                     copy_batch_idx, copy_of_batch = get_batch_index_from_list(copy_batch_list, item.batch_no, item.warehouse)
                     original_qty = copy_of_batch.batch_qty
                     qty = batch.batch_qty - item.qty
                     print("")
-                    print('qty = batch.batch_qty - item.qty', batch.batch_qty - item.qty, batch.name)
+                    #frappe.errprint('qty = batch.batch_qty - item.qty ' + str(batch.batch_qty - item.qty) + " " + batch.name + " qty " + str(batch.batch_qty))
                     print("")
 
                     if qty < 1:
@@ -271,7 +274,7 @@ def deduct_parent_qtys(doc, item_batch_list, parent_item):
                     print("total_item_qty ==========", total_item_qty)"""
     print("")
     print("end")
-    print("total_item_qty", total_item_qty, "item_batch_list", item_batch_list)
+    #frappe.errprint(item_batch_list)
     print("")
     return item_batch_list, total_item_qty
 
@@ -324,6 +327,8 @@ def get_rows(item_batches, rqd_rows, total_req):
     row_data = []
 
     for idx in range(rqd_rows['rows']):
+        if item_batches[idx]['batch_qty'] < 1:
+            continue
         if rqd_rows['rows'] == 1:
             row_data.append({
                 'item_code': item_batches[idx].item,
