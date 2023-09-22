@@ -22,7 +22,7 @@ def execute(filters=None):
 	"""if basis != "Item":
 		data = get_sql_data(filters, basis)
 	else:"""
-    data = get_item_data(filters, period_list)
+	data = get_item_data(filters, period_list)
 	
 	# data = get_data(filters, conditions)
 
@@ -65,7 +65,7 @@ def get_item_data(filters, period_list):
 				
 				GROUP BY t1.item_code
 			""".format( filters.get("company"), period_list[0][0], period_list[-1][1], 
-	      				period_list[0][0], period_list[0][1], # query period dates
+		  				period_list[0][0], period_list[0][1], # query period dates
 						period_list[1][0], period_list[1][1],
 						period_list[2][0], period_list[2][1],
 						period_list[3][0], period_list[3][1],
@@ -103,7 +103,7 @@ def get_item_data(filters, period_list):
 				
 				GROUP BY t1.item_code
 			""".format( filters.get("company"), period_list[0][0], period_list[-1][1], 
-	      				period_list[0][0], period_list[0][1], # query period dates
+		  				period_list[0][0], period_list[0][1], # query period dates
 						period_list[1][0], period_list[1][1],
 						period_list[2][0], period_list[2][1],
 						period_list[3][0], period_list[3][1],
