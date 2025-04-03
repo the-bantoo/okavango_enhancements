@@ -35,7 +35,7 @@ app_license = "MIT"
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
 
 
-doctype_js = {"Sales Invoice" : "/public/js/scripts/sales_invoice.js"}
+# doctype_js = {"Sales Invoice" : "/public/js/scripts/sales_invoice.js"}
 
 # Home Pages
 # ----------
@@ -101,13 +101,13 @@ doctype_js = {"Sales Invoice" : "/public/js/scripts/sales_invoice.js"}
 #	"ToDo": "custom_app.overrides.CustomToDo"
 # }
 
-override_doctype_class = {
-	"Sales Invoice": "okavango_enhancements.overrides.sales_invoice.CustomSalesInvoice"
-}
+# override_doctype_class = {
+# 	"Sales Invoice": "okavango_enhancements.overrides.sales_invoice.CustomSalesInvoice"
+# }
 
-override_whitelisted_methods = {
-	"erpnext.stock.doctype.batch.batch.get_batch_no": "okavango_enhancements.app.get_single_batch_no"
-}
+# override_whitelisted_methods = {
+# 	"erpnext.stock.doctype.batch.batch.get_batch_no": "okavango_enhancements.app.get_single_batch_no"
+# }
 # Document Events
 # ---------------
 # Hook on document methods and events
