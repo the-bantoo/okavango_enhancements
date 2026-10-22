@@ -1,0 +1,206 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2026-09-25 16:03:03.515613",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "statutory_return_information_section",
+  "employee_contribution_column",
+  "naming_series",
+  "company",
+  "payroll_entry",
+  "start_date",
+  "end_date",
+  "return_type",
+  "return_status",
+  "employee_count",
+  "paye_amount",
+  "skills_levy_amount",
+  "employee_contribution",
+  "employer_contribution",
+  "total_liability",
+  "gl_liability",
+  "reconciliation_difference",
+  "amount_paid",
+  "outstanding_amount",
+  "employees",
+  "payments",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Naming Series",
+   "options": "PAY-RET-.YYYY.-.#####"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1
+  },
+  {
+   "fieldname": "payroll_entry",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Payroll Entry",
+   "options": "Payroll Entry",
+   "reqd": 1
+  },
+  {
+   "fieldname": "start_date",
+   "fieldtype": "Date",
+   "label": "Start Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "end_date",
+   "fieldtype": "Date",
+   "label": "End Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "return_type",
+   "fieldtype": "Select",
+   "label": "Return Type",
+   "options": "PAYE\nNAPSA\nNHIMA\nSATURNIA"
+  },
+  {
+   "fieldname": "return_status",
+   "fieldtype": "Select",
+   "label": "Return Status",
+   "options": "Draft\nValidated\nSubmitted\nPartly Paid\nPaid",
+   "read_only": 1
+  },
+  {
+   "fieldname": "employee_contribution_column",
+   "fieldtype": "Column Break",
+   "label": "Employee Contribution"
+  },
+  {
+   "fieldname": "employee_count",
+   "fieldtype": "Int",
+   "label": "Employee Count",
+   "read_only": 1
+  },
+  {
+   "fieldname": "paye_amount",
+   "fieldtype": "Currency",
+   "label": "PAYE Amount",
+   "read_only": 1
+  },
+  {
+   "fieldname": "skills_levy_amount",
+   "fieldtype": "Currency",
+   "label": "Skills Levy Amount",
+   "read_only": 1
+  },
+  {
+   "fieldname": "employee_contribution",
+   "fieldtype": "Currency",
+   "label": "Employee Contribution",
+   "read_only": 1
+  },
+  {
+   "fieldname": "employer_contribution",
+   "fieldtype": "Currency",
+   "label": "Employer Contribution",
+   "read_only": 1
+  },
+  {
+   "fieldname": "total_liability",
+   "fieldtype": "Currency",
+   "label": "Total Liability",
+   "read_only": 1
+  },
+  {
+   "fieldname": "gl_liability",
+   "fieldtype": "Currency",
+   "label": "GL Liability",
+   "read_only": 1
+  },
+  {
+   "fieldname": "amount_paid",
+   "fieldtype": "Currency",
+   "label": "Amount Paid",
+   "read_only": 1
+  },
+  {
+   "fieldname": "outstanding_amount",
+   "fieldtype": "Currency",
+   "label": "Outstanding Amount",
+   "read_only": 1
+  },
+  {
+   "fieldname": "employees",
+   "fieldtype": "Table",
+   "label": "Employees",
+   "options": "Payroll Statutory Return Employee",
+   "read_only": 1
+  },
+  {
+   "fieldname": "payments",
+   "fieldtype": "Table",
+   "label": "Payments",
+   "options": "Payroll Statutory Return Payment"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Payroll Statutory Return",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "reconciliation_difference",
+   "fieldtype": "Currency",
+   "label": "Difference",
+   "read_only": 1
+  },
+  {
+   "fieldname": "statutory_return_information_section",
+   "fieldtype": "Section Break",
+   "label": "Statutory Return Information"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-10-04 14:43:15.387018",
+ "modified_by": "zulukombe@gmail.com",
+ "module": "Okavango Enhancements",
+ "name": "Payroll Statutory Return",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

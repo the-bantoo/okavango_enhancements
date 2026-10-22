@@ -1,0 +1,176 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2026-09-25 14:55:06.431069",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "company",
+  "company_tpin",
+  "napsa_employer_number",
+  "nhima_employer_number",
+  "saturnia_scheme_number",
+  "payroll_bank_account",
+  "paye_payable_account",
+  "skills_development_levy_payable_account",
+  "napsa_payable_account",
+  "nhima_payable_account",
+  "saturnia_payable_account",
+  "payroll_payable_account",
+  "paye_salary_component",
+  "napsa_employee_contribution_component",
+  "napsa_employer_contribution_component",
+  "nhima_employee_contribution_component",
+  "nhima_employer_contribution_component",
+  "saturnia_employee_contribution_component",
+  "saturnia_employer_contribution_component",
+  "skills_development_levy_component"
+ ],
+ "fields": [
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1
+  },
+  {
+   "fieldname": "company_tpin",
+   "fieldtype": "Data",
+   "label": "Company TPIN"
+  },
+  {
+   "fieldname": "napsa_employer_number",
+   "fieldtype": "Data",
+   "label": "NAPSA Employer Number"
+  },
+  {
+   "fieldname": "nhima_employer_number",
+   "fieldtype": "Data",
+   "label": "NHIMA Employer Number"
+  },
+  {
+   "fieldname": "saturnia_scheme_number",
+   "fieldtype": "Data",
+   "label": "Saturnia Scheme Number"
+  },
+  {
+   "fieldname": "payroll_bank_account",
+   "fieldtype": "Link",
+   "label": "Payroll Bank Account",
+   "options": "Bank Account"
+  },
+  {
+   "fieldname": "paye_payable_account",
+   "fieldtype": "Link",
+   "label": "PAYE Payable Account",
+   "options": "Account"
+  },
+  {
+   "fieldname": "skills_development_levy_payable_account",
+   "fieldtype": "Link",
+   "label": "Skills Development Levy Payable Account",
+   "options": "Account"
+  },
+  {
+   "fieldname": "napsa_payable_account",
+   "fieldtype": "Link",
+   "label": "NAPSA Payable Account",
+   "options": "Account"
+  },
+  {
+   "fieldname": "nhima_payable_account",
+   "fieldtype": "Link",
+   "label": "NHIMA Payable Account",
+   "options": "Account"
+  },
+  {
+   "fieldname": "saturnia_payable_account",
+   "fieldtype": "Link",
+   "label": "Saturnia Payable Account",
+   "options": "Account"
+  },
+  {
+   "fieldname": "payroll_payable_account",
+   "fieldtype": "Link",
+   "label": "Payroll Payable Account",
+   "options": "Account"
+  },
+  {
+   "fieldname": "paye_salary_component",
+   "fieldtype": "Link",
+   "label": "PAYE Salary Component",
+   "options": "Salary Component"
+  },
+  {
+   "fieldname": "napsa_employee_contribution_component",
+   "fieldtype": "Link",
+   "label": "NAPSA Employee Contribution Component",
+   "options": "Salary Component"
+  },
+  {
+   "fieldname": "nhima_employee_contribution_component",
+   "fieldtype": "Link",
+   "label": "NHIMA Employee Contribution Component",
+   "options": "Salary Component"
+  },
+  {
+   "fieldname": "saturnia_employer_contribution_component",
+   "fieldtype": "Link",
+   "label": "Saturnia Employer Contribution Component",
+   "options": "Salary Component"
+  },
+  {
+   "fieldname": "skills_development_levy_component",
+   "fieldtype": "Link",
+   "label": "Skills Development Levy Component",
+   "options": "Salary Component"
+  },
+  {
+   "fieldname": "napsa_employer_contribution_component",
+   "fieldtype": "Link",
+   "label": "NAPSA Employer Contribution Component",
+   "options": "Salary Component"
+  },
+  {
+   "fieldname": "nhima_employer_contribution_component",
+   "fieldtype": "Link",
+   "label": "NHIMA Employer Contribution Component",
+   "options": "Salary Component"
+  },
+  {
+   "fieldname": "saturnia_employee_contribution_component",
+   "fieldtype": "Link",
+   "label": "Saturnia Employee Contribution Component",
+   "options": "Salary Component"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-09-26 14:04:20.969675",
+ "modified_by": "zulukombe@gmail.com",
+ "module": "Okavango Enhancements",
+ "name": "Payroll Statutory Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

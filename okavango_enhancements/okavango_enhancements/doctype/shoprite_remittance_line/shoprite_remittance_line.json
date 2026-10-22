@@ -1,0 +1,157 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2026-05-28 15:52:54.550512",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_4z1h",
+  "amended_from",
+  "line_type",
+  "shoprite_document",
+  "branch_code",
+  "branch_name",
+  "line_date",
+  "shoprite_ref",
+  "due_to_you",
+  "due_by_you",
+  "column_break_ouoe",
+  "disc_amt",
+  "disc_",
+  "matched_sales_invoice",
+  "match_status",
+  "notes",
+  "description",
+  "batch__our_ref",
+  "posted_credit_note"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_4z1h",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Shoprite Remittance Line",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "line_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Line Type",
+   "options": "Invoice\nClaim"
+  },
+  {
+   "fieldname": "shoprite_document",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Shoprite Document"
+  },
+  {
+   "fieldname": "branch_code",
+   "fieldtype": "Data",
+   "label": "Branch Code"
+  },
+  {
+   "fieldname": "branch_name",
+   "fieldtype": "Data",
+   "label": "Branch Name"
+  },
+  {
+   "fieldname": "line_date",
+   "fieldtype": "Date",
+   "label": "Line Date"
+  },
+  {
+   "fieldname": "shoprite_ref",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Shoprite Ref"
+  },
+  {
+   "fieldname": "due_to_you",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Due To You"
+  },
+  {
+   "fieldname": "due_by_you",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Due By You"
+  },
+  {
+   "fieldname": "column_break_ouoe",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "disc_amt",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Disc Amt"
+  },
+  {
+   "fieldname": "disc_",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Disc %"
+  },
+  {
+   "fieldname": "matched_sales_invoice",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Matched Sales Invoice",
+   "options": "Sales Invoice"
+  },
+  {
+   "fieldname": "match_status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Match Status",
+   "options": "Unmatched\nMatched\nAmbiguous\nPosted"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Small Text",
+   "label": "Notes"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Data",
+   "label": "Description"
+  },
+  {
+   "fieldname": "batch__our_ref",
+   "fieldtype": "Data",
+   "label": "Batch / Our Ref"
+  },
+  {
+   "fieldname": "posted_credit_note",
+   "fieldtype": "Link",
+   "label": "Posted Credit Note",
+   "options": "Sales Invoice"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-05-29 13:33:57.222239",
+ "modified_by": "Administrator",
+ "module": "Okavango Enhancements",
+ "name": "Shoprite Remittance Line",
+ "owner": "Administrator",
+ "permissions": [],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

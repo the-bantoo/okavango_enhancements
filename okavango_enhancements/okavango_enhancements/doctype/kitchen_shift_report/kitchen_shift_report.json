@@ -1,0 +1,191 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "KSR-.YYYY.-.#####",
+ "creation": "2026-02-02 14:08:52.620677",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_7rfm",
+  "amended_from",
+  "report_date",
+  "shift",
+  "department",
+  "supervisor",
+  "wastage_entry",
+  "total_orders",
+  "last_auto_fetch_at",
+  "total_late_minutes",
+  "sla_minutes",
+  "avg_late_minutes",
+  "default_waste_warehouse",
+  "notes",
+  "workflow_state",
+  "orders_sla",
+  "waste_lines",
+  "packing_errors"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_7rfm",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Kitchen Shift Report",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "report_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Report Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "shift",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Shift",
+   "options": "Day\nNight",
+   "reqd": 1
+  },
+  {
+   "fieldname": "department",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Department",
+   "options": "Department",
+   "reqd": 1
+  },
+  {
+   "fieldname": "supervisor",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Supervisor",
+   "options": "Employee",
+   "reqd": 1
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Small Text",
+   "label": "Notes"
+  },
+  {
+   "fieldname": "workflow_state",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Workflow State",
+   "options": "Draft\nSubmitted"
+  },
+  {
+   "fieldname": "orders_sla",
+   "fieldtype": "Table",
+   "label": "Orders (SLA)",
+   "options": "Kitchen Order SLA Line"
+  },
+  {
+   "fieldname": "waste_lines",
+   "fieldtype": "Table",
+   "label": "Waste Lines",
+   "options": "Kitchen Waste Line"
+  },
+  {
+   "fieldname": "packing_errors",
+   "fieldtype": "Table",
+   "label": "Packing Errors",
+   "options": "Kitchen Packing Error Line"
+  },
+  {
+   "fieldname": "sla_minutes",
+   "fieldtype": "Int",
+   "label": "SLA Minutes"
+  },
+  {
+   "fieldname": "wastage_entry",
+   "fieldtype": "Link",
+   "label": "Wastage Entry",
+   "options": "Wastage Entry",
+   "read_only": 1
+  },
+  {
+   "fieldname": "last_auto_fetch_at",
+   "fieldtype": "Datetime",
+   "hidden": 1,
+   "label": "Last Auto Fetch At",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "default_waste_warehouse",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Default Waste Warehouse",
+   "options": "Warehouse",
+   "reqd": 1
+  },
+  {
+   "fieldname": "total_orders",
+   "fieldtype": "Int",
+   "label": "total_orders"
+  },
+  {
+   "fieldname": "total_late_minutes",
+   "fieldtype": "Int",
+   "label": "total_late_minutes"
+  },
+  {
+   "fieldname": "avg_late_minutes",
+   "fieldtype": "Float",
+   "label": "avg_late_minutes"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-02-04 11:42:12.246516",
+ "modified_by": "Administrator",
+ "module": "Okavango Enhancements",
+ "name": "Kitchen Shift Report",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Kitchen Supervisor",
+   "select": 1,
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

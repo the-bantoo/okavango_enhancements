@@ -1,0 +1,172 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2026-09-25 16:01:39.431367",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "employee",
+  "employee_name",
+  "tpin",
+  "nrc_number",
+  "napsa_ssn",
+  "nhima_member_id",
+  "saturnia_member_number",
+  "first_name",
+  "surname",
+  "other_name",
+  "date_of_birth",
+  "nature_of_employment",
+  "gross_emoluments",
+  "chargeable_emoluments",
+  "tax_credit",
+  "tax_deducted",
+  "tax_adjusted",
+  "contribution_base",
+  "employee_contribution",
+  "employer_contribution",
+  "exclusion_reason"
+ ],
+ "fields": [
+  {
+   "fieldname": "employee",
+   "fieldtype": "Link",
+   "label": "Employee",
+   "options": "Employee"
+  },
+  {
+   "fieldname": "employee_name",
+   "fieldtype": "Data",
+   "label": "Employee Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "tpin",
+   "fieldtype": "Data",
+   "label": "TPIN",
+   "read_only": 1
+  },
+  {
+   "fieldname": "nrc_number",
+   "fieldtype": "Data",
+   "label": "NRC Number",
+   "read_only": 1
+  },
+  {
+   "fieldname": "napsa_ssn",
+   "fieldtype": "Data",
+   "label": "NAPSA SSN",
+   "read_only": 1
+  },
+  {
+   "fieldname": "nhima_member_id",
+   "fieldtype": "Data",
+   "label": "NHIMA Member ID",
+   "read_only": 1
+  },
+  {
+   "fieldname": "saturnia_member_number",
+   "fieldtype": "Data",
+   "label": "Saturnia Member Number",
+   "read_only": 1
+  },
+  {
+   "fieldname": "first_name",
+   "fieldtype": "Data",
+   "label": "First Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "surname",
+   "fieldtype": "Data",
+   "label": "Surname",
+   "read_only": 1
+  },
+  {
+   "fieldname": "other_name",
+   "fieldtype": "Data",
+   "label": "Other Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "date_of_birth",
+   "fieldtype": "Data",
+   "label": "Date of Birth",
+   "read_only": 1
+  },
+  {
+   "fieldname": "nature_of_employment",
+   "fieldtype": "Data",
+   "label": "Nature of Employment",
+   "read_only": 1
+  },
+  {
+   "fieldname": "gross_emoluments",
+   "fieldtype": "Currency",
+   "label": "Gross Emoluments",
+   "read_only": 1
+  },
+  {
+   "fieldname": "chargeable_emoluments",
+   "fieldtype": "Currency",
+   "label": "Chargeable Emoluments",
+   "read_only": 1
+  },
+  {
+   "fieldname": "tax_credit",
+   "fieldtype": "Currency",
+   "label": "Tax Credit",
+   "read_only": 1
+  },
+  {
+   "fieldname": "tax_deducted",
+   "fieldtype": "Currency",
+   "label": "Tax Deducted",
+   "read_only": 1
+  },
+  {
+   "fieldname": "tax_adjusted",
+   "fieldtype": "Currency",
+   "label": "Tax Adjusted",
+   "read_only": 1
+  },
+  {
+   "fieldname": "contribution_base",
+   "fieldtype": "Currency",
+   "label": "Contribution Base",
+   "read_only": 1
+  },
+  {
+   "fieldname": "employee_contribution",
+   "fieldtype": "Currency",
+   "label": "Employee Contribution",
+   "read_only": 1
+  },
+  {
+   "fieldname": "employer_contribution",
+   "fieldtype": "Currency",
+   "label": "Employer Contribution",
+   "read_only": 1
+  },
+  {
+   "fieldname": "exclusion_reason",
+   "fieldtype": "Small Text",
+   "label": "Exclusion Reason",
+   "read_only": 1
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-09-25 16:17:25.987311",
+ "modified_by": "zulukombe@gmail.com",
+ "module": "Okavango Enhancements",
+ "name": "Payroll Statutory Return Employee",
+ "owner": "Administrator",
+ "permissions": [],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

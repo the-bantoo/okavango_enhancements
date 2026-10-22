@@ -1,0 +1,75 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2026-02-02 15:22:26.817558",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "sales_invoice",
+  "error_type",
+  "severity",
+  "root_cause",
+  "corrective_action",
+  "packer"
+ ],
+ "fields": [
+  {
+   "fieldname": "sales_invoice",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Sales Invoice",
+   "options": "Sales Invoice",
+   "reqd": 1
+  },
+  {
+   "fieldname": "error_type",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Error Type",
+   "options": "Kitchen Reason Code",
+   "reqd": 1
+  },
+  {
+   "fieldname": "severity",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Severity",
+   "options": "Low\nMedium\nHigh",
+   "reqd": 1
+  },
+  {
+   "fieldname": "root_cause",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Root Cause",
+   "reqd": 1
+  },
+  {
+   "fieldname": "corrective_action",
+   "fieldtype": "Small Text",
+   "label": "Corrective Action",
+   "reqd": 1
+  },
+  {
+   "fieldname": "packer",
+   "fieldtype": "Link",
+   "label": "Packer",
+   "options": "Employee"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-02-02 15:27:19.995222",
+ "modified_by": "Administrator",
+ "module": "Okavango Enhancements",
+ "name": "Kitchen Packing Error Line",
+ "owner": "Administrator",
+ "permissions": [],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

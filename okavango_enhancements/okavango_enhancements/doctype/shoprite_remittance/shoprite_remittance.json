@@ -1,0 +1,181 @@
+{
+ "actions": [],
+ "allow_import": 1,
+ "allow_rename": 1,
+ "creation": "2026-05-28 15:41:06.064337",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_y1lj",
+  "amended_from",
+  "customer",
+  "remittance_period",
+  "deposit_date",
+  "remittance_link",
+  "column_break_xsdc",
+  "net_paid",
+  "total_discount",
+  "vat_on_discount",
+  "status",
+  "payment_entry",
+  "discount_credit_note",
+  "section_break_jokb",
+  "remittance_lines",
+  "section_break_njit",
+  "notes"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_y1lj",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Shoprite Remittance",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Customer",
+   "options": "Customer",
+   "reqd": 1
+  },
+  {
+   "fieldname": "remittance_period",
+   "fieldtype": "Data",
+   "label": "Remittance Period",
+   "reqd": 1
+  },
+  {
+   "fieldname": "deposit_date",
+   "fieldtype": "Date",
+   "label": "Deposit Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_xsdc",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "net_paid",
+   "fieldtype": "Currency",
+   "label": "Net Paid",
+   "reqd": 1
+  },
+  {
+   "fieldname": "total_discount",
+   "fieldtype": "Currency",
+   "label": "Total Discount",
+   "reqd": 1
+  },
+  {
+   "fieldname": "vat_on_discount",
+   "fieldtype": "Currency",
+   "label": "VAT on Discount",
+   "reqd": 1
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Status",
+   "options": "Draft\nMatching\nPosted",
+   "reqd": 1
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Small Text",
+   "label": "Notes"
+  },
+  {
+   "allow_bulk_edit": 1,
+   "fieldname": "remittance_lines",
+   "fieldtype": "Table",
+   "label": "Remittance Lines",
+   "options": "Shoprite Remittance Line"
+  },
+  {
+   "fieldname": "remittance_link",
+   "fieldtype": "Data",
+   "label": "Remittance Link"
+  },
+  {
+   "fieldname": "payment_entry",
+   "fieldtype": "Link",
+   "label": "Payment Entry",
+   "options": "Payment Entry"
+  },
+  {
+   "fieldname": "discount_credit_note",
+   "fieldtype": "Link",
+   "label": "Discount Credit Note",
+   "options": "Sales Invoice"
+  },
+  {
+   "fieldname": "section_break_jokb",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "section_break_njit",
+   "fieldtype": "Section Break"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-05-29 13:36:15.780053",
+ "modified_by": "Administrator",
+ "module": "Okavango Enhancements",
+ "name": "Shoprite Remittance",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Accounts Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Accounts User",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

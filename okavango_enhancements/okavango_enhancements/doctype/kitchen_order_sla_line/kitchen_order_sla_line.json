@@ -1,0 +1,124 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2026-02-02 14:58:37.010323",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "sales_invoice",
+  "ready_time",
+  "customer",
+  "pick_up_time",
+  "late_reason",
+  "late_minutes",
+  "boxes_checked",
+  "packer",
+  "boxes_checked_at",
+  "notes",
+  "received_time_source",
+  "reference",
+  "invoice_received_time"
+ ],
+ "fields": [
+  {
+   "fieldname": "sales_invoice",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Sales Invoice",
+   "options": "Sales Invoice",
+   "reqd": 1
+  },
+  {
+   "fieldname": "ready_time",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "Ready Time",
+   "reqd": 1
+  },
+  {
+   "fieldname": "pick_up_time",
+   "fieldtype": "Datetime",
+   "label": "Pick Up Time"
+  },
+  {
+   "fieldname": "late_reason",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Late Reason",
+   "options": "Kitchen Reason Code"
+  },
+  {
+   "default": "0",
+   "fieldname": "boxes_checked",
+   "fieldtype": "Check",
+   "label": "Boxes Checked"
+  },
+  {
+   "fieldname": "packer",
+   "fieldtype": "Link",
+   "label": "Packer",
+   "options": "Employee"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Small Text",
+   "label": "Notes"
+  },
+  {
+   "default": "ERP (Sales Invoice creation)",
+   "fieldname": "received_time_source",
+   "fieldtype": "Select",
+   "label": "Received Time Source",
+   "options": "ERP (Sales Invoice creation)\nWhatsApp/Call/Email",
+   "reqd": 1
+  },
+  {
+   "fieldname": "reference",
+   "fieldtype": "Data",
+   "label": "Received Time Reference"
+  },
+  {
+   "fieldname": "invoice_received_time",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "Invoice Received Time",
+   "reqd": 1
+  },
+  {
+   "fieldname": "boxes_checked_at",
+   "fieldtype": "Datetime",
+   "hidden": 1,
+   "label": "boxes_checked_at",
+   "read_only": 1
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Customer",
+   "read_only": 1
+  },
+  {
+   "fieldname": "late_minutes",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Late Minutes",
+   "read_only": 1
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-02-03 11:57:00.042727",
+ "modified_by": "Administrator",
+ "module": "Okavango Enhancements",
+ "name": "Kitchen Order SLA Line",
+ "owner": "Administrator",
+ "permissions": [],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
